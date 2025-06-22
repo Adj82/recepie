@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'provider.dart';
 
 class RecipeDetailPage extends StatefulWidget {
   final String recipeName;
@@ -11,7 +13,7 @@ class RecipeDetailPage extends StatefulWidget {
 class _RecipeDetailPageState extends State<RecipeDetailPage> {
   final Map<String, dynamic> recipeData = {
     'Creamy Tomato Pasta': {
-      'image': 'assets/images/creamy_tomato_pasta.jpg',
+      'image': 'https://tinyurl.com/4dfu5ku2',
       'desc': 'A simple yet delicious pasta dish with a rich, creamy tomato sauce. Perfect for a quick weeknight dinner.',
       'ingredients': [
         '1 lb pasta',
@@ -33,7 +35,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       },
     },
     'Fresh Garden Salad': {
-      'image': 'assets/images/fresh_garden_salad.jpg',
+      'image': 'https://tinyurl.com/2kna9pcn',
       'desc': 'A crisp, refreshing salad with seasonal vegetables and a light dressing.',
       'ingredients': [
         '1 head lettuce',
@@ -82,11 +84,23 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.bookmark_border, color: Colors.black87),
-            onPressed: () {},
+          Consumer<BookmarkProvider>(
+            builder: (context, bookmarkProvider, child) {
+              return IconButton(
+                icon: Icon(
+                  bookmarkProvider.isSaved(widget.recipeName)
+                      ? Icons.bookmark
+                      : Icons.bookmark_border,
+                  color: Colors.black87,
+                ),
+                onPressed: () {
+                  bookmarkProvider.toggleSave(widget.recipeName);
+                },
+              );
+            },
           ),
         ],
+
         backgroundColor: const Color(0xFFF8F5F2),
         elevation: 0,
         centerTitle: true,
@@ -97,7 +111,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
+            child: Image.network(
               recipe['image'],
               width: double.infinity,
               height: 180,

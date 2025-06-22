@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'create_recepie_page.dart';
 import 'recepie_detail_page.dart';
 import 'favourites_page.dart';
 import 'profile_page.dart';
@@ -16,10 +17,10 @@ class _HomePageState extends State<HomePage> {
   static final List<Widget> _pages = [
     const HomeContent(),
     FavoritesPage(),
-    Center(child: Text('Create', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Saved', style: TextStyle(fontSize: 24))),
+    CreatePage(), // Now index 2 matches the "Create" tab
     ProfilePage(),
   ];
+
 
   void _onNavTapped(int index) {
     setState(() {
@@ -39,7 +40,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.add_box_outlined), label: 'Create'),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: 'Saved'),
           BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
       ),
@@ -93,7 +93,7 @@ class HomeContent extends StatelessWidget {
               children: [
                 _FeaturedCard(
                   title: 'Creamy Tomato Pasta',
-                  image: 'assets/images/creamy_tomato_pasta.jpg',
+                  image: 'https://tinyurl.com/4dfu5ku2',
                   onTap: () {
                     Navigator.push(
                       context,
@@ -105,7 +105,7 @@ class HomeContent extends StatelessWidget {
                 ),
                 _FeaturedCard(
                   title: 'Fresh Garden Salad',
-                  image: 'assets/images/fresh_garden_salad.jpg',
+                  image: 'https://tinyurl.com/2kna9pcn',
                   onTap: () {
                     Navigator.push(
                       context,
@@ -183,7 +183,7 @@ class _FeaturedCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.asset(
+              child: Image.network(
                 image,
                 width: 180,
                 height: 90,
